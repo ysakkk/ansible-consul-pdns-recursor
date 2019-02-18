@@ -1,0 +1,30 @@
+- name: "install pdns-recursor"
+  yum:
+    name: "pdns-recursor"
+
+- name: "enable pdns-recursor"
+  systemd:
+    name: "pdns-recursor"
+    state: "started"
+    enabled: "yes"
+
+- name: "pdns-recursor for .consul"
+  lineinfile:
+    dest: "/etc/pdns-recursor/recursor.conf"
+    line: "forward-zones-recurse=consul=127.0.0.1:8600"
+  notify: "restart pdns-recursor"
+
+- name: "set resolv.conf"
+  copy:
+    src: "resolv.conf"
+    dest: "/etc/resolv.conf"
+
+- name: disable resolv.conf control from NM
+  ini_file: 
+    dest: "/etc/NetworkManager/NetworkManager.conf" 
+    section: "main"
+    option:  "dns" 
+    value:   "none"
+  notify: "restart NetworkManager"
+
+
