@@ -22,7 +22,7 @@
 - name: disable resolv.conf control from NM
   copy: 
     src:  "01-resolv.conf"
-    dest: "/etc/NetworkManager/01-resolv.conf"
+    dest: "/etc/NetworkManager/conf.d/01-resolv.conf"
   notify: "restart NetworkManager"
 
 
