@@ -20,11 +20,9 @@
     dest: "/etc/resolv.conf"
 
 - name: disable resolv.conf control from NM
-  ini_file: 
-    dest: "/etc/NetworkManager/NetworkManager.conf" 
-    section: "main"
-    option:  "dns" 
-    value:   "none"
+  copy: 
+    src:  "01-resolv.conf"
+    dest: "/etc/NetworkManager/01-resolv.conf"
   notify: "restart NetworkManager"
 
 
